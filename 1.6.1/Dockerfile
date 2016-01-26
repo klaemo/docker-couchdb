@@ -21,6 +21,8 @@ RUN groupadd -r couchdb && useradd -d /var/lib/couchdb -g couchdb couchdb
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
+    erlang-nox \
+    libicu52 \
     libmozjs185-1.0 \
     libnspr4 \
     libnspr4-0d \
@@ -54,14 +56,17 @@ RUN set -xe \
 ENV COUCHDB_VERSION 1.6.1
 
 # download dependencies, compile and install couchdb
-RUN apt-get update -y && apt-get install -y --no-install-recommends \
-    build-essential \
+RUN buildDeps=' \
+    gcc \
+    g++ \
     erlang-dev \
-    erlang-nox \
     libcurl4-openssl-dev \
     libicu-dev \
     libmozjs185-dev \
     libnspr4-dev \
+    make \
+  ' \
+  && apt-get update && apt-get install -y --no-install-recommends $buildDeps \
   && curl -fSL http://apache.osuosl.org/couchdb/source/$COUCHDB_VERSION/apache-couchdb-$COUCHDB_VERSION.tar.gz -o couchdb.tar.gz \
   && curl -fSL https://www.apache.org/dist/couchdb/source/$COUCHDB_VERSION/apache-couchdb-$COUCHDB_VERSION.tar.gz.asc -o couchdb.tar.gz.asc \
   && gpg --verify couchdb.tar.gz.asc \
@@ -70,17 +75,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
   && cd /usr/src/couchdb \
   && ./configure --with-js-lib=/usr/lib --with-js-include=/usr/include/mozjs \
   && make && make install \
-  && apt-get purge -y \
-    binutils \
-    build-essential \
-    cpp \
-    libcurl4-openssl-dev \
-    libicu-dev \
-    libnspr4-dev \
-    make \
-    perl \
-  && apt-get autoremove -y \
-  && apt-get install -y libicu52 --no-install-recommends \
+  && apt-get purge -y --auto-remove $buildDeps \
   && rm -rf /var/lib/apt/lists/* /usr/src/couchdb /couchdb.tar.gz* \
   && chown -R couchdb:couchdb \
     /usr/local/lib/couchdb /usr/local/etc/couchdb \
