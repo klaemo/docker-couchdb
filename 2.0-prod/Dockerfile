@@ -50,6 +50,7 @@ RUN cd /usr/src \
 # Now override some of the configuration
 COPY couchdb.config /usr/src/couchdb/rel/
 COPY local.ini /usr/src/couchdb/rel/overlay/etc/
+COPY vm.args /usr/src/couchdb/rel/overlay/etc/
 
 # Build the release and install into /opt
 RUN cd /usr/src/couchdb \
@@ -76,6 +77,8 @@ RUN apt-get purge -y \
 
 USER couchdb
 EXPOSE 5984
+EXPOSE 4369
+EXPOSE 9100
 WORKDIR /opt/couchdb
 
 ENTRYPOINT ["/opt/couchdb/bin/couchdb"]
