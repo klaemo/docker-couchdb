@@ -40,13 +40,20 @@ RUN apt-get update -y -qq && apt-get install -y --no-install-recommends \
  && apt-get update -y -qq && apt-get install -y nodejs \
  && npm install -g grunt-cli
 
-# Compile everything and build a relocatable release
-RUN cd /usr/src && git clone --depth 1 https://git-wip-us.apache.org/repos/asf/couchdb.git \
- && cd couchdb && git checkout $COUCHDB_VERSION \
- && cd /usr/src/couchdb && ./configure --disable-docs && make build
+# Acquire and configure CouchDB source code
+RUN cd /usr/src \
+ && git clone --depth 1 https://git-wip-us.apache.org/repos/asf/couchdb.git \
+ && cd couchdb \
+ && git checkout $COUCHDB_VERSION \
+ && ./configure --disable-docs
 
-# Install the release into /opt
-RUN mv /usr/src/couchdb/rel/couchdb /opt/ \
+# Now override some of the configuration
+COPY couchdb.config /usr/src/couchdb/rel/overlay/
+COPY local.ini /usr/src/couchdb/rel/overlay/etc/
+
+# Build the release and install into /opt
+RUN make build \
+ && mv /usr/src/couchdb/rel/couchdb /opt/ \
  && mkdir -p /opt/couchdb/data \
  && chown -R couchdb:couchdb /opt/couchdb
 VOLUME ["/opt/couchdb/data"]
