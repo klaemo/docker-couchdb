@@ -48,15 +48,16 @@ RUN cd /usr/src \
  && ./configure --disable-docs
 
 # Now override some of the configuration
-COPY couchdb.config /usr/src/couchdb/rel/overlay/
+COPY couchdb.config /usr/src/couchdb/rel/
 COPY local.ini /usr/src/couchdb/rel/overlay/etc/
 
 # Build the release and install into /opt
-RUN make build \
+RUN cd /usr/src/couchdb \
+ && make build \
  && mv /usr/src/couchdb/rel/couchdb /opt/ \
- && mkdir -p /opt/couchdb/data \
- && chown -R couchdb:couchdb /opt/couchdb
-VOLUME ["/opt/couchdb/data"]
+ && mkdir -p /var/lib/couchdb \
+ && chown -R couchdb:couchdb /opt/couchdb /var/lib/couchdb
+VOLUME ["/var/lib/couchdb"]
 
 # Cleanup build detritus
 RUN apt-get purge -y \
