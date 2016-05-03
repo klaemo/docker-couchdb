@@ -10,11 +10,6 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-# All nodes must share the same magic cookie for distributed Erlang to work.
-# Comment out this line if you synchronized the cookies by other means (using
-# the ~/.erlang.cookie file, for example).
--setcookie monster
-
 # Ensure that the Erlang VM listens on a known port
 -kernel inet_dist_listen_min 9100
 -kernel inet_dist_listen_max 9100
