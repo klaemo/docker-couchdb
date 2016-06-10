@@ -45,7 +45,10 @@ RUN apt-get update -y -qq && apt-get install -y --no-install-recommends \
  && git clone --depth 1 https://git-wip-us.apache.org/repos/asf/couchdb.git \
  && cd couchdb \
  && git checkout $COUCHDB_VERSION \
- && ./configure --disable-docs \
+ && ./configure \
+    --disable-docs \
+    --databasedir /var/lib/couchdb \
+    --viewindexdir /var/lib/couchdb \
 # Build the release and install into /opt
  && make build \
  && mv /usr/src/couchdb/rel/couchdb /opt/ \
@@ -67,9 +70,9 @@ RUN apt-get update -y -qq && apt-get install -y --no-install-recommends \
  && rm -rf /var/lib/apt/lists/* /usr/lib/node_modules /usr/src/couchdb
 
 # Now override some of the configuration
-COPY couchdb.config /usr/src/couchdb/rel/
-COPY local.ini /usr/src/couchdb/rel/overlay/etc/
-COPY vm.args /usr/src/couchdb/rel/overlay/etc/
+COPY local.ini /opt/couchdb/etc/
+COPY vm.args /opt/couchdb/etc/
+RUN chown couchdb:couchdb /opt/couchdb/etc/*
 
 VOLUME ["/var/lib/couchdb"]
 USER couchdb
