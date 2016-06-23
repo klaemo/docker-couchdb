@@ -14,7 +14,9 @@ FROM debian:jessie
 
 MAINTAINER Clemens Stolle klaemo@apache.org
 
-ENV COUCHDB_VERSION master
+# Pin to an arbitrary commit for a deterministic build
+# Once CouchDB has an actual 2.0 tag, we can use that
+ENV COUCHDB_VERSION 1b38ccd
 
 # Download dependencies
 RUN apt-get update -y -qq \
