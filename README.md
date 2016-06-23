@@ -151,6 +151,9 @@ and then build and run
 [sudo] docker run -d -p 5984:5984 -v ~/couchdb:/usr/local/var/lib/couchdb you/awesome-couchdb
 ```
 
+For the `2.0-single` image, configuration is stored at `/opt/couchdb/etc/` and
+the data volume is stored at `/opt/couchdb/data/`.
+
 ## Feedback, Issues, Contributing
 
 **Please use Github issues for any questions, bugs, feature requests. :)**
