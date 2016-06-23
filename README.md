@@ -13,8 +13,8 @@ If you're looking for a CouchDB with SSL support you can check out [klaemo/couch
 
 - `1`, `1.6`, `1.6.1`, `latest`: CouchDB 1.6.1
 - `1-couchperuser`, `1.6-couchperuser`, `1.6.1-couchperuser`: CouchDB 1.6.1 with couchperuser plugin
-- `2.0-dev`: CouchDB 2.0 master (development version) with preconfigured demo cluster
-- `2.0-dev-docs`: CouchDB 2.0 master (development version) with preconfigured demo cluster and documentation
+- `2.0-dev`: CouchDB 2.0 master (development version) with preconfigured dev cluster
+- `2.0-dev-docs`: CouchDB 2.0 master (development version) with preconfigured dev cluster and documentation
 - `2.0-single`: CouchDB 2.0 master (development version)
 
 ## Features
@@ -78,7 +78,7 @@ The node will also start in [admin party mode](http://guide.couchdb.org/draft/se
 
 Once running, you can visit the new admin interface at `http://dockerhost:5984/_utils/`
 
-### in a developer cluster
+### In a developer cluster
 
 Available on the docker registry as [klaemo/couchdb:2.0-dev](https://index.docker.io/u/klaemo/couchdb/).
 This build demonstrates the CouchDB clustering features by creating a local 
