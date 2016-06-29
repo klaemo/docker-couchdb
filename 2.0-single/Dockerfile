@@ -16,7 +16,7 @@ MAINTAINER Clemens Stolle klaemo@apache.org
 
 # Pin to an arbitrary commit for a deterministic build
 # Once CouchDB has an actual 2.0 tag, we can use that
-ENV COUCHDB_VERSION 1b38ccd
+ENV COUCHDB_VERSION 1b38ccd0294ad17d719655612b14b00160168dfd
 
 # Download dependencies
 RUN apt-get update -y -qq \
