@@ -43,7 +43,7 @@ RUN apt-get update -y -qq \
  && npm install -g grunt-cli \
  # Acquire CouchDB source code
  && cd /usr/src \
- && git clone --depth 1 https://git-wip-us.apache.org/repos/asf/couchdb.git \
+ && git clone --single-branch https://git-wip-us.apache.org/repos/asf/couchdb.git \
  && cd couchdb \
  && git checkout $COUCHDB_VERSION \
  # Build the release and install into /opt
