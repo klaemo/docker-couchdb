@@ -23,7 +23,7 @@ if [ "$1" = '/opt/couchdb/bin/couchdb' ]; then
 	chmod 775 /opt/couchdb/etc/*.d
 
 if [ ! -z "$nodename" ]; then
-	echo "-name $nodename@localhost" >> /opt/couchdb/etc/vm.args
+	echo "-name couchdb@$nodename" >> /opt/couchdb/etc/vm.args
 fi
 
 	exec gosu couchdb "$@"
