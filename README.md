@@ -11,7 +11,7 @@ If you're looking for a CouchDB with SSL support you can check out [klaemo/couch
 
 ## Available tags
 
-- `1`, `1.6`, `1.6.1`, `latest`: CouchDB 1.6.1
+- `1`, `1.6`, `1.6.1`: CouchDB 1.6.1
 - `1-couchperuser`, `1.6-couchperuser`, `1.6.1-couchperuser`: CouchDB 1.6.1 with couchperuser plugin
 - `2.0-dev`: CouchDB 2.0 RC.1 (release vote) with preconfigured dev cluster
 - `latest`, `2.0.0`: CouchDB 2.0 single node
@@ -24,7 +24,29 @@ If you're looking for a CouchDB with SSL support you can check out [klaemo/couch
 * runs everything as user `couchdb` (security ftw!)
 * docker volume for data
 
-## Run (stable)
+## Run (2.0.0/latest)
+
+Available on the docker registry as [klaemo/couchdb:latest](https://index.docker.io/u/klaemo/couchdb/).
+This is a developer preview of the upcoming CouchDB 2.0 release. A data volume
+is exposed on `/opt/couchdb/data`, and the node's port is exposed on `5984`.
+
+Please note that CouchDB no longer autocreates system tables for you, so you will
+have to create `_global_changes`, `_metadata`, `_replicator` and `_users` manually.
+The node will also start in [admin party mode](http://guide.couchdb.org/draft/security.html#party)!
+
+```bash
+# expose it to the world on port 5984 and use your current directory as the CouchDB Database directory
+[sudo] docker run -p 5984:5984 -v $(pwd):/opt/couchdb/data klaemo/couchdb:2.0-single
+18:54:48.780 [info] Application lager started on node nonode@nohost
+18:54:48.780 [info] Application couch_log_lager started on node nonode@nohost
+18:54:48.780 [info] Application couch_mrview started on node nonode@nohost
+18:54:48.780 [info] Application couch_plugins started on node nonode@nohost
+[...]
+```
+Note that you can also use the NODENAME environment variable to set the name of the CouchDB node inside the container.
+Once running, you can visit the new admin interface at `http://dockerhost:5984/_utils/`
+
+## Run (1.6.1)
 
 Available as an official image on Docker Hub as [couchdb](https://hub.docker.com/_/couchdb/)
 
@@ -55,28 +77,6 @@ This build includes the `couchperuser` plugin.
 ```
 [sudo] docker run -d -p 5984:5984 --name couchdb couchdb:1.6.1-couchperuser
 ```
-
-## Run (dev)
-
-Available on the docker registry as [klaemo/couchdb:latest](https://index.docker.io/u/klaemo/couchdb/).
-This is a developer preview of the upcoming CouchDB 2.0 release. A data volume
-is exposed on `/opt/couchdb/data`, and the node's port is exposed on `5984`.
-
-Please note that CouchDB no longer autocreates system tables for you, so you will
-have to create `_global_changes`, `_metadata`, `_replicator` and `_users` manually.
-The node will also start in [admin party mode](http://guide.couchdb.org/draft/security.html#party)!
-
-```bash
-# expose it to the world on port 5984 and use your current directory as the CouchDB Database directory
-[sudo] docker run -p 5984:5984 -v $(pwd):/opt/couchdb/data klaemo/couchdb:2.0-single
-18:54:48.780 [info] Application lager started on node nonode@nohost
-18:54:48.780 [info] Application couch_log_lager started on node nonode@nohost
-18:54:48.780 [info] Application couch_mrview started on node nonode@nohost
-18:54:48.780 [info] Application couch_plugins started on node nonode@nohost
-[...]
-```
-
-Once running, you can visit the new admin interface at `http://dockerhost:5984/_utils/`
 
 ### In a developer cluster
 
@@ -161,3 +161,4 @@ I don't get notified about comments on Docker Hub, so I might respond really lat
 ## Contributors
 
 - [@joeybaker](https://github.com/joeybaker)
+

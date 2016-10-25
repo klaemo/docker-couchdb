@@ -21,8 +21,8 @@ if [ "$1" = '/opt/couchdb/bin/couchdb' ]; then
 
 	chmod 664 /opt/couchdb/etc/*.ini
 	chmod 775 /opt/couchdb/etc/*.d
-if [ ! -z "$nodename" ] && ! grep "couchdb@" /opt/couchdb/etc/vm.args; then	
-	echo "-name couchdb@$nodename" >> /opt/couchdb/etc/vm.args
+if [ ! -z "$NODENAME" ] && ! grep "couchdb@" /opt/couchdb/etc/vm.args; then	
+	echo "-name couchdb@$NODENAME" >> /opt/couchdb/etc/vm.args
 fi
 
 	exec gosu couchdb "$@"
