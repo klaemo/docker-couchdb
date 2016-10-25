@@ -21,6 +21,9 @@ if [ "$1" = '/opt/couchdb/bin/couchdb' ]; then
 
 	chmod 664 /opt/couchdb/etc/*.ini
 	chmod 775 /opt/couchdb/etc/*.d
+if [ ! -z "$nodename" ] && ! grep "couchdb@" /opt/couchdb/etc/vm.args; then	
+	echo "-name couchdb@$nodename" >> /opt/couchdb/etc/vm.args
+fi
 
 	if [ "$COUCHDB_USER" ] && [ "$COUCHDB_PASSWORD" ]; then
 		# Create admin
