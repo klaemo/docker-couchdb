@@ -23,6 +23,7 @@ If you're looking for a CouchDB with SSL support you can check out [klaemo/couch
 * exposes CouchDB on port `5984` of the container
 * runs everything as user `couchdb` (security ftw!)
 * docker volume for data
+* for docker 2.0 you can pre-load your DBs and designs.
 
 ## Run (2.0.0/latest)
 
@@ -45,6 +46,47 @@ The node will also start in [admin party mode](http://guide.couchdb.org/draft/se
 ```
 
 Once running, you can visit the new admin interface at `http://dockerhost:5984/_utils/`
+
+You can also boostrap your instance with DBs and Designs.  Similar to the MySQL docker implementation, you can put your couch views in /docker-entrypoint-initdb.d (using a mount point)
+
+In docker compose you would do this:
+
+```
+volumes:
+    - ./path/to/folder:/docker-entrypoint-initdb.d
+```
+
+In your folder path you would have a directory structure like the following:
+
+```
+mydb1
+  - myview1.json
+  - myview2.json
+mydb2
+  - myview3.json
+```
+
+Each folder will get created as a DB.  Each json file inside that DB will get created as design.
+
+An example design json file for myview1.json:
+
+```
+{
+  "_id":"_design/myview1",
+  "language":"javascript",
+  "views":{
+     "getFoo":{
+        "map":"function(doc) { emit(doc.foo, doc); }"
+     },
+     "getFooCount":{
+         "map":"function(doc) { if(doc.foo) {  emit(doc.foo, null); } }",
+         "reduce":"_count"
+      }
+  }
+}
+```
+
+
 
 ## Run (1.6.1)
 
