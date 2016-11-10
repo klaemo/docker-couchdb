@@ -23,6 +23,7 @@ If you're looking for a CouchDB with SSL support you can check out [klaemo/couch
 * exposes CouchDB on port `5984` of the container
 * runs everything as user `couchdb` (security ftw!)
 * docker volume for data
+* for docker 2.0 you can pre-load your DBs and designs.
 
 ## Run (2.0.0/latest)
 
