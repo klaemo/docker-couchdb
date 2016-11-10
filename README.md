@@ -46,6 +46,50 @@ The node will also start in [admin party mode](http://guide.couchdb.org/draft/se
 
 Once running, you can visit the new admin interface at `http://dockerhost:5984/_utils/`
 
+You can also boostrap your instance with DBs and Designs.  Similar to the MySQL docker implementation you put your couch views in the /docker-entrypoint-initdb.d (using a mount point)
+
+In docker compose you would do this:
+
+```
+volumes:
+    - ./path/to/folder:/docker-entrypoint-initdb.d
+```
+
+In your folder path you would have a directory structure like the following:
+
+```
+mydb
+  - myview1.json
+  - myview2.json
+mydb2
+  - myview3.json
+```
+
+Each folder will get created as a DB.  Each JSON file inside that DB will get created as design with the views inside the JSON.
+
+An example view json file for myview1.json:
+
+```
+{
+  "_id":"_design/myview1",
+  "language":"javascript",
+  "views":{
+     "getBlah":{
+        "map":"function(doc) { emit(doc.test, doc.params); }"
+     },
+     "getFoo":{
+        "map":"function(doc) { emit(doc.test, doc.params); }"
+     },
+     "getFooCount":{
+         "map":"function(doc) { if(doc.label) {  emit(doc.label, null); } }",
+         "reduce":"_count"
+      }
+  }
+}
+```
+
+
+
 ## Run (1.6.1)
 
 Available as an official image on Docker Hub as [couchdb](https://hub.docker.com/_/couchdb/)
