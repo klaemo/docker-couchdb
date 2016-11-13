@@ -91,11 +91,16 @@ COPY ./docker-entrypoint.sh /
 # Setup directories and permissions
 RUN chmod +x /docker-entrypoint.sh \
  && mkdir /opt/couchdb/data /opt/couchdb/etc/local.d /opt/couchdb/etc/default.d \
- && chown -R couchdb:couchdb /opt/couchdb/
+ && chown -R couchdb:couchdb /opt/couchdb/ \
+ && mkdir /docker-entrypoint-initdb.d \
+ && chown -R couchdb:couchdb /docker-entrypoint-initdb.d
+
 
 WORKDIR /opt/couchdb
 EXPOSE 5984 4369 9100
 VOLUME ["/opt/couchdb/data"]
 
 ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
+#CMD ["/opt/couchdb/bin/couchdb"]
+
 CMD ["/opt/couchdb/bin/couchdb"]
