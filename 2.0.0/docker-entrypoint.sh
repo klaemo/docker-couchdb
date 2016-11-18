@@ -20,6 +20,7 @@ if [ "$1" = '/opt/couchdb/bin/couchdb' ]; then
 	chmod -R 0770 /opt/couchdb/data
 
 	chmod 664 /opt/couchdb/etc/*.ini
+	chmod 664 /opt/couchdb/etc/local.d/*.ini
 	chmod 775 /opt/couchdb/etc/*.d
 
 	if [ ! -z "$NODENAME" ] && ! grep "couchdb@" /opt/couchdb/etc/vm.args; then
@@ -33,7 +34,7 @@ if [ "$1" = '/opt/couchdb/bin/couchdb' ]; then
 	fi
 
 	# if we don't find an [admins] section followed by a non-comment, display a warning
-	if ! grep -Pzoqr '\[admins\]\n[^;]\w+' /opt/couchdb/etc/*.ini; then
+	if ! grep -Pzoqr '\[admins\]\n[^;]\w+' /opt/couchdb/etc/local.d/*.ini; then
 		# The - option suppresses leading tabs but *not* spaces. :)
 		cat >&2 <<-'EOWARN'
 			****************************************************
