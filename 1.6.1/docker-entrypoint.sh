@@ -14,6 +14,16 @@
 set -e
 
 if [ "$1" = 'couchdb' ]; then
+	# map user UID and group GID's back to parent system
+	# useful for using persistent volumes and preserving id mappings
+	if [ "$COUCHDB_UID" ]; then
+		usermod -o -u $COUCHDB_UID couchdb
+	fi
+
+	if [ "$COUCHDB_GID" ]; then
+		groupmod -o -g $COUCHDB_GID couchdb
+	fi
+
 	# we need to set the permissions here because docker mounts volumes as root
 	chown -R couchdb:couchdb \
 		/usr/local/var/lib/couchdb \
