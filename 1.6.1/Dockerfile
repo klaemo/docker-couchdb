@@ -96,9 +96,6 @@ RUN buildDeps=' \
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 
-# Define mountable directories.
-VOLUME ["/usr/local/var/lib/couchdb"]
-
 EXPOSE 5984
 WORKDIR /var/lib/couchdb
 
