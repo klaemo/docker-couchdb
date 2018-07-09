@@ -1,20 +1,4 @@
-⚠️🚨 This image is deprecated, outdated and insecure. Please use the official CouchDB image https://hub.docker.com/_/couchdb/ 🚨⚠️
-
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-
-YADC [![Build Status](https://travis-ci.org/klaemo/docker-couchdb.svg?branch=master)](https://travis-ci.org/klaemo/docker-couchdb)
-
-⚠️ NOTICE ⚠️: moved to the CouchDB org https://github.com/apache/couchdb-docker
+# ⚠️🚨 This image is deprecated, outdated and insecure. Please use the official CouchDB image https://hub.docker.com/_/couchdb/ 🚨⚠️
 
 Yet Another Dockerized CouchDB.
 Put the couch in a docker container and ship it anywhere.
