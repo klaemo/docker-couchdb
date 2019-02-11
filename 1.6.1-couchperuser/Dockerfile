@@ -10,18 +10,8 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-FROM couchdb:1.6.1
+FROM debian:jessie
 
 MAINTAINER Clemens Stolle klaemo@apache.org
 
-ENV COUCHPERUSER_SHA 5d28db3272eea9619d4391b33aae6030f0319ecc54aa2a2f2b6c6a8d448f03f2
-RUN apt-get update && apt-get install -y rebar make \
- && mkdir -p /usr/local/lib/couchdb/plugins/couchperuser \
- && cd /usr/local/lib/couchdb/plugins \
- && curl -L -o couchperuser.tar.gz https://github.com/etrepum/couchperuser/archive/1.1.0.tar.gz \
- && echo "$COUCHPERUSER_SHA *couchperuser.tar.gz" | sha256sum -c - \
- && tar -xzf couchperuser.tar.gz -C couchperuser --strip-components=1 \
- && rm couchperuser.tar.gz \
- && cd couchperuser \
- && make \
- && apt-get purge -y --auto-remove rebar make
+CMD echo "This image is deprecated, outdated and insecure. Please use the official CouchDB image https://hub.docker.com/_/couchdb/" && exit 1
